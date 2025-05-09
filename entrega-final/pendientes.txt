@@ -1,0 +1,28 @@
+# Notas PIA IO
+
+## Introducción
+Hay que mencionar lo que sigue:
+- ¿Es eficiente el sistema del IMSS actualmente? -> Reputación
+- Información sobre UNIFILA: la mejor "alternativa"
+- Explicar cómo se obtuvo la info (encuestas, dataset, referenciar a datosabiertos)
+- ¿Por qué ENSAT y no ENCAL? -> 2017
+
+---- Terminado ----
+
+## Información
+- Cambiar los valores aproximados por los "reales"
+- ¿Por qué se usa la función techo y piso?
+
+## Desarrollo
+- Desigualdades para s1 y s2
+- Sumatoria de las W y Wq
+- Razones posibles: distancias (incluir mapa) -> aglomeración?
+
+## Conclusiones
+- ¿Por qué es ineficiente?
+- Cantidad de especialistas y unidades de alta especialidad (muy aproximado), tenemos razones para pensar que debería ser un número mucho menor (especialistas por unidad)
+- Alternativas
+- Mencionar la falta de información
+- Considerar los sueldos
+
+
