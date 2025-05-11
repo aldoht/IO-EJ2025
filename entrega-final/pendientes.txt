@@ -7,8 +7,6 @@ Hay que mencionar lo que sigue:
 - Explicar cómo se obtuvo la info (encuestas, dataset, referenciar a datosabiertos)
 - ¿Por qué ENSAT y no ENCAL? -> 2017
 
----- Terminado ----
-
 ## Información
 - Cambiar los valores aproximados por los "reales"
 - ¿Por qué se usa la función techo y piso?
@@ -25,4 +23,4 @@ Hay que mencionar lo que sigue:
 - Mencionar la falta de información
 - Considerar los sueldos
 
-
+---- Terminado ----
