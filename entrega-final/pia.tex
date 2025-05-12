@@ -21,7 +21,7 @@
 
 \begin{document}
 	\begin{opening}
-		\title{Avance - PIA Investigación de Operaciones}
+		\title{Sistema de colas en serie en el IMSS}
 		\author[Universidad Autónoma de Nuevo León, San Nicolás de los Garza, aldo.hernandezt@uanl.edu.mx]{Aldo Hernández}
 		\author[Universidad Autónoma de Nuevo León, San Nicolás de los Garza, abraham.lopezg@uanl.edu.mx]{Abraham López}
 		
@@ -82,13 +82,15 @@
         \item \textbf{Tercera etapa (Hospital 25)}: Los pacientes son atendidos por múltiples especialistas de tercer nivel, modelado nuevamente como un sistema de colas \textbf{M/M/s}.
     \end{enumerate}
 
-    \begin{figure}[h]
-		\centering
-		\includegraphics[width=130mm]{./images/sistema.jpg}
-		\caption{Modelo.}
-	\end{figure}
-
     Una vez que el paciente recibe la atención especializada, existen tres posibles desenlaces, el paciente se cura y no requiere más atención (salida del sistema), el paciente requiere seguimiento y debe regresar al hospital o el paciente abandona el tratamiento por voluntad propia. Cabe aclarar que este estudio se concentrará en el caso de la salida del sistema, puesto que asumimos un caso ideal en el que el paciente busca mejorarse y además no tiene múltiples consultas ya que eso agrandaría el flujo del sistema a estudiar.
+    
+    \begin{figure}[h]
+    	\centering
+    	\includegraphics[width=130mm]{./images/sistema.jpg}
+    	\caption{Modelo.}
+    \end{figure}
+    
+    \newpage
 
     \section{Datos y problema}
     Después de realizar una limpieza básica para eliminar datos innecesarios y registros vacíos, filtramos únicamente los datos correspondientes a las unidades médicas mencionadas. Además, es importante mencionar que se asumió una distribución de probabilidad exponencial para cada una de las colas tanto para los tiempos entre llegadas como los tiempos de servicio. En las siguientes subsecciones se explicarán los procesos llevados a cabo en cada una de las colas.
@@ -136,8 +138,6 @@
     	\caption{Gráfica de frecuencias para los tiempos de espera en la UMF 28.}
     	\label{fig:frec_espera_umf28}
     \end{figure}
-    
-    \newpage
     
     \subsection{Segunda cola (M/M/1)}
     Los pacientes se generan en una fuente de entrada finita lo suficientemente grande como para no preocuparnos por la población debido a que en el flujo del sistema estos pacientes son aquellos que al salir de su consulta en alguna unidad de primer nivel de atención requieren una cita posterior en una unidad de tercer nivel, entonces se tomará como una fuente ilimitada. Además, se asumirá una distribución Poisson para las llegadas de pacientes bajo el supuesto de que llegan aleatoriamente con una cierta tasa media fija, por lo que el tiempo entre llegadas sigue una distribución exponencial. Se ignorarán los casos en los que los pacientes se rehúsan a entrar al sistema (debido a que en un caso ideal su salud debería ser la prioridad) junto con la distinción de grupos entre los pacientes (por edad, enfermedad, entre otros).
@@ -271,7 +271,7 @@
     	\label{fig:analisis_s1}
     \end{figure}
     
-    A pesar de que una cola con menos servidores es más eficiente bajo una carga relativa de trabajo igual, al aumentar el número de servidores en la cola podríamos reducir la cantidad de pacientes en espera. Aún más, podemos notar en la tabla \ref{s1_comp} que a mayor valor de $s_{1}$, $L$ se aproxima más a 34, lo que quiere decir que no habría ninguna línea de espera; de hecho, este valor converge rápidamente y para un aumento de un solo consultorio se estaría reduciendo la cantidad de personas en la cola en menos de la mitad.
+    A pesar de que una cola con menos servidores es más eficiente bajo una carga relativa de trabajo igual, al aumentar el número de servidores en la cola podríamos reducir la cantidad de pacientes en espera. Aún más, podemos notar en la tabla \ref{tab:s1_comp} que a mayor valor de $s_{1}$, $L$ se aproxima más a 34, lo que quiere decir que no habría ninguna línea de espera; de hecho, este valor converge rápidamente y para un aumento de un solo consultorio se estaría reduciendo la cantidad de personas en la cola en menos de la mitad.
     
     \subsubsection{Cola inestable} \label{sssec:inestable1}
     Si consideramos $s_{1} \leq 33$, entonces esta cola estaría siempre saturada operando bajo una sobrecarga de pacientes, ocasionando que no todos sean atendidos y que los servidores nunca dejen de trabajar. Esto sería un problema bastante grave ya que la cola crecerá indefinidamente con el tiempo hasta que dejen de ofrecer servicio en la unidad médica (por los horarios de atención) y los tiempos de espera aumentarán durante el transcurso del día, generando disconformidad en los pacientes.
