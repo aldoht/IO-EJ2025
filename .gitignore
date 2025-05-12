@@ -1,6 +1,9 @@
 # IDEs
 .idea
 
+# Virtual environment
+.venv
+
 ## Core latex/pdflatex auxiliary files:
 *.aux
 *.lof
