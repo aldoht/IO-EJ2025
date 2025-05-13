@@ -32,8 +32,8 @@ def create_graph(server_values: list, queue_model: int):
     lines = []
     labels = []
     for i, s in enumerate(server_values):
-        L_values = [calculate_l(rho, s) for rho in rho_values]
-        line, = plt.plot(rho_values, L_values, '-', linewidth=2.5, color=colors[i])
+        l_values = [calculate_l(rho, s) for rho in rho_values]
+        line, = plt.plot(rho_values, l_values, '-', linewidth=2.5, color=colors[i])
         lines.append(line)
         labels.append(f's = {s}')
 
@@ -49,8 +49,8 @@ def create_graph(server_values: list, queue_model: int):
         idx = np.abs(rho_values - pos_rho).argmin()
         bbox_props = dict(boxstyle="round,pad=0.3", fc="white", ec="gray", alpha=0.8)
         plt.annotate(f's = {s}',
-                     xy=(rho_values[idx], L_values[idx]),
-                     xytext=(rho_values[idx] + 0.01, L_values[idx] * 1.1),
+                     xy=(rho_values[idx], l_values[idx]),
+                     xytext=(rho_values[idx] + 0.01, l_values[idx] * 1.1),
                      fontsize=12,
                      bbox=bbox_props,
                      fontweight='bold')
@@ -72,10 +72,11 @@ def calculate_queue_values(l: float, m: float, server_values: list):
               r,
               calculate_l(r, server))
 
-create_graph([34, 50, 70, 100, 140], 1)
-print('Valores de s1 para la tabla')
-calculate_queue_values(2.22, 0.066, [34, 35, 36, 37, 40, 45, 50, 70, 100, 140])
+if __name__ == '__main__':
+    create_graph([34, 50, 70, 100, 140], 1)
+    print('Valores de s1 para la tabla')
+    calculate_queue_values(2.22, 0.066, [34, 35, 36, 37, 40, 45, 50, 70, 100, 140])
 
-create_graph([31, 45, 65, 90], 2)
-print('Valores de s2 para la tabla')
-calculate_queue_values(0.99, 0.033, [31, 32, 33, 34, 35, 45, 65, 90, 140])
+    create_graph([31, 45, 65, 90], 2)
+    print('Valores de s2 para la tabla')
+    calculate_queue_values(0.99, 0.033, [31, 32, 33, 34, 35, 45, 65, 90, 140])
