@@ -26,7 +26,7 @@
 		\author[Universidad Autónoma de Nuevo León, San Nicolás de los Garza, abraham.lopezg@uanl.edu.mx]{Abraham López}
 		
 		\begin{abstract}
-            El Instituto Mexicano del Seguro Social es la entidad más popular y accesible para recibir atención médica a nivel nacional, sin embargo es debido a esta misma razón que es común una gran cantidad de pacientes diarios en cada una de las unidades médicas, lo que alarga los tiempos de atención para todos los ciudadanos que requieren algún tipo de procedimiento médico. Este estudio busca encontrar los tiempos de espera promedio para los pacientes y la cantidad de servidores necesarios para convertir el sistema en uno estable con el propósito de ofrecer alternativas para una mejor calidad de atención al paciente. Para lograr esto, se utilizará la teoría de colas para modelar un sistema particular en serie (o también conocido como tándem) y encontrar las medidas de desempeño para su posterior análisis. El estudio indicó a partir de datos y algunas suposiciones que en un caso general de un paciente referido entre dos unidades médicas es inestable y por consecuencia ineficiente, además las soluciones propuestas son aumentar la cantidad de servidores en cada unidad y cambiar la disciplina de las colas.
+            El Instituto Mexicano del Seguro Social es la entidad más popular y accesible para recibir atención médica a nivel nacional, sin embargo es debido a esta misma razón que es común una gran cantidad de pacientes diarios en cada una de las unidades médicas, lo que alarga los tiempos de atención para todos los ciudadanos que requieren algún tipo de procedimiento médico. Este estudio busca encontrar los tiempos de espera promedio para los pacientes y la cantidad de servidores necesarios para convertir el sistema en uno estable con el propósito de ofrecer alternativas para una mejor calidad de atención al paciente. Para lograr esto, se utilizará la teoría de colas para modelar un sistema particular en serie (o también conocido como tándem) y encontrar las medidas de desempeño para su posterior análisis. El estudio indicó a partir de datos y algunas suposiciones que en un caso general de un paciente referido entre dos unidades médicas el sistema es inestable y por consecuencia ineficiente, además las soluciones propuestas son aumentar la cantidad de servidores en cada unidad y cambiar la disciplina de las colas.
 		\end{abstract}
 
 		\keywords{colas, IMSS, python}
@@ -219,7 +219,7 @@
     \subsection{Cola de espera en UMF 28}
     Como se había mencionado con anterioridad, para que esta línea de espera sea estable se requiere que existan al menos 34 consultorios en la Unidad de Medicina Familiar 28. Si bien no es posible saber el número de servidores exactos debido a la falta de información, podemos dividir el análisis en dos partes: una cola estable y otra inestable.
     
-    \subsubsection{Cola estable}
+    \subsubsection{Cola estable} \label{subsubsec:cola1_estable}
     Tomando en cuenta $s_{1} = 34$ entonces $\rho$ está muy cercano a uno, lo que significa que esencialmente la cola siempre estará saturada, es decir, las colas siempre serán largas y los servidores estarán en constante trabajo. Esto es malo por diversas razones, pero principalmente hay dos: las personas que requieren atención médica tendrán que esperar 18 minutos en promedio para ser atendidos y los médicos generales estarán dando consultas continuas, por lo que es normal pensar que habría que dividir las jornadas de trabajo entre todo el personal médico, incurriendo en más gastos para la unidad médica al tener que pagar más o mayores sueldos. 
     
     Viendo estos problemas, es fácil pensar que si se aumenta el número de consultorios, se eliminaría al menos uno de estos problemas en gran escala. Consultando la figura \ref{fig:valores_s1} es evidente que para un mismo $\rho$ el sistema con menos servidores ($34$) gestiona mejor las colas ya que tiene colas más cortas, sin embargo estas mediciones son relativas a la carga de trabajo. Tomando en cuenta los distintos valores de $s_{1}$ mostrados en la gráfica, calculamos $\rho$:
@@ -332,8 +332,83 @@
     
     Desde el punto de vista del paciente esta cantidad excesiva de tiempos de espera no es ideal, aunque es hasta cierto punto normal por la cantidad de demanda que hay. Este tiempo podría deberse a varias razones como el desequilibrio entre las tasas de llegada y la capacidad de servicio en cada una de las colas, las distancias entre unidades médicas que podría ocasionar una sobrecarga de pacientes debido a que no hay ninguna otra opción cercana o la cantidad de médicos disponibles.
     
+    \subsection{Simulación}
+    A través de un programa en \textit{python} se llevó a cabo una simulación de cada cola con número de servidores variable, de modo que los resultados más importantes se pueden ver en las figuras \ref{fig:l_tables} y \ref{fig:pn_graficas}.
+    
+    Analizando la primera cola con $s_{1}$ servidores, podemos ver en la tabla \ref{tab:l_s1_comp} que aunque $34$ servidores convertirían la cola en una cola estable (como se mostró en la sección \ref{subsubsec:cola1_estable}), si lográramos implementar $37$ consultorios conseguiríamos reducir el número de pacientes en el sistema en casi un 50\%, lo cual implicaría un tiempo promedio de tan solo casi $15$ minutos en la UMF 28 a diferencia de los casi $33$ minutos en el sistema real con consultorios generalmente otorgando servicio continuo pero en promedio con casi ningún paciente en la sala de espera. Es importante mencionar que los valores de esta tabla son distintos a los de la tabla \ref{tab:s1_comp} debido a que estos datos son simulados suponiendo un caso ideal, a diferencia de los datos en \ref{tab:s1_comp} que fueron realmente medidos y aproximados.
+    
+    Además, podemos observar en la gráfica \ref{fig:pn_s1} que la probabilidad se concentra alrededor de $30$ y $100$ pacientes; esto quiere decir que si se implementaran $34$ servidores, tendríamos un sistema estable pero aún así sería muy poco probable que hayan consultorios sin otorgar servicio.
+    
+    \begin{figure}[!ht]
+    	\centering
+    	
+    	\begin{subfigure}[c]{0.48\linewidth}
+    		\centering
+    		\begin{tabular}{|c|c|}
+    			\hline
+    			Pacientes en sistema & Servidores \\
+    			\hline
+    			75.2105 & 34 \\
+    			46.9958 & 35 \\
+    			40.1179 & 36 \\
+    			37.1919 & 37 \\
+    			35.6683 & 38 \\
+    			34.7909 & 39 \\
+    			34.2563 & 40 \\
+    			33.9198 & 41 \\
+    			33.704  & 42 \\
+    			\hline
+    		\end{tabular}
+    		\caption{Distintos valores de $L$ según $s_{1}$.}
+    		\label{tab:l_s1_comp}
+    	\end{subfigure}
+    	\begin{subfigure}[c]{0.48\linewidth}
+    		\centering
+    		\begin{tabular}{|c|c|}
+    			\hline
+    			Pacientes en sistema & Servidores \\
+    			\hline
+    			166.377 & 30 \\
+    			48.5426 & 31 \\
+    			37.8557 & 32 \\
+    			34.0949 & 33 \\
+    			32.2989 & 34 \\
+    			31.3168 & 35 \\
+    			30.74   & 36 \\
+    			30.3873 & 37 \\
+    			30.1668 & 38 \\
+    			\hline
+    		\end{tabular}
+    		\caption{Distintos valores de $L$ según $s_{2}$.}
+    		\label{tab:l_s2_comp}
+    	\end{subfigure}
+    	\caption{Relación entre pacientes en promedio en el sistema y los servidores en la primera y tercer cola.}
+    	\label{fig:l_tables}
+    \end{figure}
+    
+    \begin{figure}[!ht]
+    	\centering
+    	
+    	\begin{subfigure}[c]{0.48\linewidth}
+    		\centering
+    		\includegraphics[width=\textwidth]{./images/pn-s1.png}
+    		\caption{Valores de $P_{n}$ para distintos $n$ en la primera cola.}
+    		\label{fig:pn_s1}
+    	\end{subfigure}
+    	\begin{subfigure}[c]{0.48\linewidth}
+    		\centering
+    		\includegraphics[width=\textwidth]{./images/pn-s2.png}
+    		\caption{Valores de $P_{n}$ para distintos $n$ en la tercera cola.}
+    		\label{fig:pn_s2}
+    	\end{subfigure}
+    	\caption{Probabilidad de tener $n$ pacientes en la primera y tercer cola.}
+    	\label{fig:pn_graficas}
+    \end{figure}
+    
+    Por otra parte, podemos llegar a conclusiones similares con la información de la tercera cola. Si se implementaran $33$ servidores en lugar de los $30$ necesarios habría una reducción de cerca del 80\% en el número de pacientes según la tabla \ref{tab:l_s2_comp} y un tiempo en el hospital aproximado de $31$ minutos a diferencia de los casi $49$ en el sistema real.
+    
     \section{Conclusiones}
-    Según los datos publicados por el Instituto Mexicano del Seguro Social y las suposiciones hechas a lo largo del estudio, los resultados indican que el sistema es ineficiente a un grado tristemente normal. Si bien no se contó con la suficiente información para la investigación y el estudio se simplificó bastante, es difícil considerar la posibilidad de tener más de 34 médicos generales dando consultas en una sola Unidad de Medicina Familiar y más de 31 médicos especialistas en un Hospital de Especialidades.
+    Según los datos publicados por el Instituto Mexicano del Seguro Social y las suposiciones hechas a lo largo del estudio, los resultados indican que el sistema es ineficiente a un grado tristemente normal. Si bien no se contó con la suficiente información para la investigación y el estudio se simplificó bastante, es difícil considerar la posibilidad de tener 37 médicos generales dando consultas en una sola Unidad de Medicina Familiar y 33 médicos especialistas en un Hospital de Especialidades.
     
     Esto ocasiona que en la realidad los sistemas sean inestables al menos durante largos periodos de tiempo (dejando de lado la suposición de tasas promedio de llegadas constantes), generando grandes inconformidades en la población que acude a estos centros de salud que se reflejan en una mala reputación para la organización de salud pública del país.
     
@@ -342,6 +417,8 @@
     Es claro que este estudio está basado en algunos datos y grandes suposiciones, ya que resulta obvio por ejemplo que no todos los pacientes en el sistema de citas van referidos al HES 25 ni todos los pacientes de la UMF 28 requieren una cita en dicho hospital de especialidades, este tipo de suposiciones solo pueden ser reemplazadas por datos si tan solo existiera información pública disponible para ello. Sin embargo, gran parte de lo utilizado para el análisis fue obtenido de información publicada por el mismo IMSS; estos datos no mienten.
     
     A pesar de que este estudio está lejos de ser un análisis exhaustivo del sistema de salud pública en México por la falta de rigurosidad e información, consideramos que los resultados obtenidos reflejan una realidad decepcionante del país: es difícil para el mexicano promedio conseguir la atención médica que necesita en el menor tiempo posible.
+    
+    \newpage
     
     \bibliographystyle{../common-styles/cs-agh}
     \bibliography{pia-bibliografia}
