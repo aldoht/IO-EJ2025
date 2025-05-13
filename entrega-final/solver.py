@@ -96,7 +96,10 @@ def get_mean_from_dataset(level: int):
         case _:
             raise Exception('Error: Ese nivel no existe en los archivos del problema.')
 
-def show_pvalues_graph(limit: int, q_info: dict):
+def show_pvalues_graph(limit: int, q_info: dict, **kwargs):
+    title = kwargs.get('graph_title', 'Probabilidades de tener x pacientes en el sistema\nen algún tiempo dado t')
+    xlabel = kwargs.get('graph_xlabel', 'Número de pacientes')
+
     plt.style.use('seaborn-v0_8-darkgrid')
     xvalues = get_domain(limit)
     yvalues = get_p_values(xvalues, q_info['rho'], q_info['s'], q_info['p0'])
@@ -104,8 +107,8 @@ def show_pvalues_graph(limit: int, q_info: dict):
     plt.figure(figsize=(10, 6))
     plt.plot(xvalues, yvalues, label='P(n)', color='steelblue', linewidth=2, marker='o', markersize=4)
     plt.axvline(x=max_n_value, color='crimson', linestyle='--', linewidth=2, label=f'Máx. en n={max_n_value}')
-    plt.title('Probabilidades de tener x pacientes en el sistema\nen algún tiempo dado t', fontsize=14, pad=15)
-    plt.xlabel('Número de pacientes', fontsize=12)
+    plt.title(title, fontsize=14, pad=15)
+    plt.xlabel(xlabel, fontsize=12)
     plt.ylabel('Probabilidad', fontsize=12)
     plt.legend(frameon=True, shadow=True, fontsize=10)
     plt.grid(True, linestyle=':', linewidth=1)
