@@ -96,10 +96,7 @@ def get_mean_from_dataset(level: int):
         case _:
             raise Exception('Error: Ese nivel no existe en los archivos del problema.')
 
-def show_pvalues_graph(limit: int, q_info: dict, **kwargs):
-    title = kwargs.get('graph_title', 'Probabilidades de tener x pacientes en el sistema\nen algún tiempo dado t')
-    xlabel = kwargs.get('graph_xlabel', 'Número de pacientes')
-
+def show_pvalues_graph(limit: int, q_info: dict, title: str, xlabel: str):
     plt.style.use('seaborn-v0_8-darkgrid')
     xvalues = get_domain(limit)
     yvalues = get_p_values(xvalues, q_info['rho'], q_info['s'], q_info['p0'])
@@ -120,7 +117,10 @@ def display_l_values(q_info: dict, fmt: str):
     headers = ['Pacientes promedio en sistema', 'Servidores']
     print(tabulate(rows, headers=headers, tablefmt=fmt))
 
-def display_queue(l: float, m: float, queues: Literal['Unknown'] | Literal[1], limit: Literal['Unknown'] | int):
+def display_queue(l: float, m: float, queues: Literal['Unknown'] | Literal[1], limit: Literal['Unknown'] | int, **kwargs):
+    title = kwargs.get('graph_title', 'Probabilidades de tener x pacientes en el sistema\nen algún tiempo dado t')
+    xlabel = kwargs.get('graph_xlabel', 'Número de pacientes')
+
     servers = get_min_server(l, m)
 
     if queues == 'Unknown':
@@ -131,10 +131,7 @@ def display_queue(l: float, m: float, queues: Literal['Unknown'] | Literal[1], l
     display_queue_params(queue_params, 'heavy_grid')
     display_l_values(queue_params, 'heavy_grid')
 
-    if limit == 'Unknown':
-        show_pvalues_graph(queue_params['L']*4, queue_params)
-    else:
-        show_pvalues_graph(limit, queue_params)
+    show_pvalues_graph(queue_params['L']*4, queue_params, title, xlabel) if limit == 'Unknown' else show_pvalues_graph(limit, queue_params, title, xlabel)
 
 if __name__ == '__main__':
     print('Bienvenido al programa, ¿desea resolver los datos del IMSS o tiene otro problema?',
@@ -157,5 +154,7 @@ if __name__ == '__main__':
         case 2:
             print('Por favor ingrese los siguientes datos:')
             lambda_1, mu_1 = get_lambda_mu()
-            display_queue(lambda_1, mu_1, 'Unknown', 'Unknown')
+            display_queue(lambda_1, mu_1, 'Unknown', 'Unknown',
+                          graph_title=input('Ingrese el título de la gráfica para probabilidades: '),
+                          graph_xlabel=input('Ingrese la etiqueta del eje x: '))
     print('Saliendo del programa...')
