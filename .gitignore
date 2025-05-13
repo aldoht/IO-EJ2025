@@ -3,6 +3,7 @@
 
 # Virtual environment
 .venv
+entrega-final/__pycache__/*
 
 ## Core latex/pdflatex auxiliary files:
 *.aux
