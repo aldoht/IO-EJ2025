@@ -7,7 +7,10 @@ Repositorio donde se encuentra el material relacionado a la clase de Investigaci
 - [Bibliografía](#bibliografía)
 
 ## Proyecto Final
-- [Primer avance]()
+- [Primer avance](./avances/avance-1/avance1.pdf)
+- [Documento final](./entrega-final/pia.pdf)
+- [Presentación final](./entrega-final/pia-presentacion.pdf)
+- [Solver](./entrega-final/solver.py)
 
 ## Bibliografía
 - G. Lieberman & F. Hillier, *Introducción a la Investigación de Operaciones*, 9na ed., McGraw Hill, 2010. ([pdf](./Libros/Introducción%20a%20la%20Investigación%20de%20Operaciones%20(9na%20ed)%20-%20Hillier%20Lieberman.pdf))
